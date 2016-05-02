@@ -50,16 +50,31 @@ def generate_sentence(d):
     return ' '.join(li)
 
 def main():
-    fname = sys.argv[1]
-    with open(fname, "rt", encoding="utf-8") as f:
-        text = f.read()
+    greeting_file = sys.argv[1]
+    body_file = sys.argv[2]
+    closing_file = sys.argv[3]
+    
+    with open(greeting_file, "rt", encoding="utf-8") as f:
+        greeting_text = f.read()
+    with open(body_file, "rt", encoding="utf-8") as g:
+        body_text = g.read()
+    with open(closing_file, "rt", encoding="utf-8") as h:
+        closing_text = h.read()
 
-    words = text.split()
-    d = build_dict(words)
+    greeting_words = greeting_text.split()
+    greeting = build_dict(greeting_words)
+
+    body_words = body_text.split()
+    body = build_dict(body_words)
+
+    closing_words = closing_text.split()
+    closing = build_dict(closing_words)
+    
     #pprint(d)
-    print()
-    for i in range(random.randint(15, 25)):
-        sent = generate_sentence(d)
-        print(sent)
+    print("\n" + generate_sentence(greeting) + "\n")
+    for i in range(random.randint(3, 12)):
+        print(generate_sentence(body))
+    print("\n" + generate_sentence(closing) + "\n")
+
 
 main()
