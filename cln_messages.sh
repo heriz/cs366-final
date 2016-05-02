@@ -2,6 +2,7 @@
 
 
 #automate the running of the python script to get newly cleaned files
+#will automatically set the current working directory to the current directory
 FILES=`ls *.mbox`
 CWD=`pwd`
 

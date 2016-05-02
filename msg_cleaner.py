@@ -48,7 +48,11 @@ def cleanup_email(email, strip_url=False):
   email = email.split("\n")
   cleanedEmail = list()
   for lines in email:
-    lines = lines.strip(">")
+    if lines.startswith(">"):
+      lines = ""
+    reply_email = re.findall(r"<.*@.*>", lines)
+    if reply_email:
+      lines = ""
     line = lines.split(" ")
     cleanedLine = list()
     for word in line:
@@ -83,8 +87,8 @@ def cleanup_email(email, strip_url=False):
     if imageReg:
       for terms in imageReg:
         fullyCleanedLine = fullyCleanedLine.replace(terms,"")
-
-    cleanedEmail.append(fullyCleanedLine)
+    if fullyCleanedLine != "":
+      cleanedEmail.append(fullyCleanedLine)
   fullyCleanedEmail = "\n".join(cleanedEmail) 
   return fullyCleanedEmail
 
@@ -99,12 +103,17 @@ def deleteRepeatingLetters(matchobj):
   return replacement
 
 def main(argv):
+  #deal with multiple argument amounts
   input_file = argv[1]
   output_file = argv[2]
   if len(argv) == 4:
     tagger_flag = argv[3]
+  elif len(argv) == 5:
+    tagger_flag = argv[3]
+    pos_flag = argv[4]
   else:
     tagger_flag = "f"
+    pos_flag = "f"
 
   current_mailbox = mailbox.mbox(input_file)
   if tagger_flag == "t":
@@ -146,8 +155,11 @@ def main(argv):
       #get the length of words for iteration
       sentenceLength = len(words)
       for i in range(sentenceLength):
-        #join the words and tags with an underscore
-        pair = words[i] + "_" + tags[i]
+        #join the words and tags with an underscore if desired
+        if pos_flag == "t":
+          pair = tags[i]
+        else:
+          pair = words[i] + "_" + tags[i]
         #then add it to the list of pairs
         wordTagPair.append(pair)
       #Afterwards, join the pairs like a sentence
