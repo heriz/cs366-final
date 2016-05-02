@@ -79,6 +79,11 @@ def cleanup_email(email, strip_url=False):
     if htmlReg:
       for terms in htmlReg:
         fullyCleanedLine = fullyCleanedLine.replace(terms, "")
+    imageReg = re.findall(r"\[image\: .*",fullyCleanedLine)
+    if imageReg:
+      for terms in imageReg:
+        fullyCleanedLine = fullyCleanedLine.replace(terms,"")
+
     cleanedEmail.append(fullyCleanedLine)
   fullyCleanedEmail = "\n".join(cleanedEmail) 
   return fullyCleanedEmail
