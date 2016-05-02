@@ -9,6 +9,7 @@ for item in $FILES
 do
     #IFS=. elem=($item)
     textfile="${item[0]}.txt"
-    echo "python3 $CWD/msg_cleaner.py $CWD/$item $CWD/$textfile"
-    `python3 $CWD/msg_cleaner.py $CWD/$item $CWD/$textfile`
+    `mkdir cleaned`
+    echo "python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile"
+    `python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile`
 done
