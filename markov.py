@@ -3,9 +3,12 @@ import random
 from random import choice
 from pprint import pprint
 
-EOS = ['.', '?', '!']
+body_EOS = ['.', '?', '!']
+greeting_EOS = [',', '.', '!', ':']
 
 numlist = list(range(30))
+
+body_len = random.randint(3, 12)
 
 def build_dict(words):
     """
@@ -27,7 +30,7 @@ def build_dict(words):
 
     return d
 
-def generate_sentence(d):
+def generate_sentence(d, eos):
     li = [key for key in d.keys() if key[0][0].isupper()]
     key = choice(li)
 
@@ -41,7 +44,7 @@ def generate_sentence(d):
         except KeyError:
             break
         li.append(third)
-        if third[-1] in EOS:
+        if third[-1] in eos:
             break
         # else
         key = (second, third)
@@ -61,20 +64,23 @@ def main():
     with open(closing_file, "rt", encoding="utf-8") as h:
         closing_text = h.read()
 
+    # remove residual empty strings
+    closing_list = list(filter(None, closing_text.split("\n")))
+
+    # * is designated newline character in source text file
+    for i in range(len(closing_list)):
+        closing_list[i] = closing_list[i].replace('*','\n')
+    
     greeting_words = greeting_text.split()
     greeting = build_dict(greeting_words)
 
     body_words = body_text.split()
     body = build_dict(body_words)
-
-    closing_words = closing_text.split()
-    closing = build_dict(closing_words)
     
-    #pprint(d)
-    print("\n" + generate_sentence(greeting) + "\n")
-    for i in range(random.randint(3, 12)):
-        print(generate_sentence(body))
-    print("\n" + generate_sentence(closing) + "\n")
+    print("\n" + generate_sentence(greeting, greeting_EOS) + "\n")
+    for i in range(body_len):
+        print(generate_sentence(body, body_EOS))
+    print("\n" + str(random.choice(closing_list)) + "\n")
 
 
 main()
