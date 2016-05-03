@@ -50,9 +50,12 @@ def cleanup_email(email, strip_url=False):
   for lines in email:
     if lines.startswith(">"):
       lines = ""
-    reply_email = re.findall(r"<.*@.*>", lines)
+    reply_email = re.findall(r"On .*\,.*at.*\,.* \<.*@.*\> wrote:", lines)
     if reply_email:
       lines = ""
+    if "begin forwarded message:" in lines.lower():
+      lines = ""
+    lines = lines.strip().strip("-")
     line = lines.split(" ")
     cleanedLine = list()
     for word in line:
@@ -108,6 +111,7 @@ def main(argv):
   output_file = argv[2]
   if len(argv) == 4:
     tagger_flag = argv[3]
+    pos_flag = "f"
   elif len(argv) == 5:
     tagger_flag = argv[3]
     pos_flag = argv[4]
@@ -127,6 +131,7 @@ def main(argv):
     body = cleanup_email(body, strip_url=True)
     decoded_emails.append(body)
   for elements in decoded_emails:
+    elements = elements.strip()
     write_file.write(elements + "\n")
   write_file.close()
   if tagger_flag == "t":

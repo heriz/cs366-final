@@ -11,6 +11,6 @@ do
     #IFS=. elem=($item)
     textfile="${item[0]}.txt"
     `mkdir cleaned`
-    echo "python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile"
-    `python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile`
+    echo "python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile t"
+    `python3 $CWD/msg_cleaner.py $CWD/$item $CWD/cleaned/$textfile t`
 done
