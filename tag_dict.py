@@ -2,6 +2,16 @@ import os, sys
 import yaml
 from collections import defaultdict
 
+"""
+    to run this code:
+    python3 tag_dict.py [name of file which is output from msg_cleaner.py or
+    text_file_to_tagged.py] [yaml file which you want to use to store data]
+
+    [] indicate a filename parameter in the form *.* because it doesn't really
+    matter to a computer. :)
+
+"""
+
 def main(arg):
   input_file = arg[1]
   yaml_file = arg[2]
@@ -21,9 +31,6 @@ def main(arg):
       word, tag = pairs.split("_")[:2]
       all_tags[tag].append(word)
      
-  #for entries in all_tags.keys():
-  #  print(entries)
-
   if os.path.exists(yaml_file):
     #do some stuff to get the current values of the yaml written to hard disk
     temp = defaultdict(list)
@@ -45,6 +52,8 @@ def main(arg):
     output.close()
   else:
     output = open(yaml_file, "w")
+    for entries in all_tags:
+      all_tags[entries] = list(set(all_tags[entries]))
     yaml.dump(all_tags, output)
     output.close()
 
