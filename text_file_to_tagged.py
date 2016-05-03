@@ -38,7 +38,7 @@ def main(arg):
   for each_sentence in tagged_sentences:
     sentence_lined = each_sentence + "\n"
     output_file.write(sentence_lined)
-  outputFile.close()
+  output_file.close()
   #clean up the last temporary file
   os.remove("temp.txt")
 
