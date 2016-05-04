@@ -56,6 +56,11 @@ def cleanup_email(email, strip_url=False):
     if "begin forwarded message:" in lines.lower():
       lines = ""
     lines = lines.strip().strip("-")
+    email = re.findall(r"([a-zA-Z1-9+_*]{1,255}\@.*\.)(com|net|org|edu)",lines)
+    if email:
+      for elem in email:
+        wholeaddress = elem[0] + elem[1]
+        lines = lines.replace(wholeaddress, "")
     line = lines.split(" ")
     cleanedLine = list()
     for word in line:
@@ -90,8 +95,8 @@ def cleanup_email(email, strip_url=False):
     if imageReg:
       for terms in imageReg:
         fullyCleanedLine = fullyCleanedLine.replace(terms,"")
-    if fullyCleanedLine != "":
-      cleanedEmail.append(fullyCleanedLine)
+    #if fullyCleanedLine != "":
+    cleanedEmail.append(fullyCleanedLine)
   fullyCleanedEmail = "\n".join(cleanedEmail) 
   return fullyCleanedEmail
 
