@@ -1,3 +1,9 @@
+# usage:
+# python3 markov.py [greeting text file] [body text file] [closing text file]
+#
+# example:
+# python3 markov.py greetings-cappy.txt cappy.mbox.txt closings-cappy.txt
+
 import sys
 import random
 from random import choice
@@ -25,7 +31,6 @@ def build_dict(words):
         key = (first, second)
         if key not in d:
             d[key] = []
-        #
         d[key].append(third)
 
     return d
@@ -76,11 +81,14 @@ def main():
 
     body_words = body_text.split()
     body = build_dict(body_words)
+
+    greeting = generate_sentence(greeting, greeting_EOS)
+    closing = str(random.choice(closing_list))
     
-    print("\n" + generate_sentence(greeting, greeting_EOS) + "\n")
+    print("\n" + greeting + "\n")
     for i in range(body_len):
         print(generate_sentence(body, body_EOS))
-    print("\n" + str(random.choice(closing_list)) + "\n")
+    print("\n" + closing + "\n")
 
 
 main()
