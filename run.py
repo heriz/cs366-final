@@ -57,21 +57,21 @@ def handle_choices(choice):
     naive_tags.replace_and_output("data/naive/cappy.outline", 
         "gen.txt","data/naive/cappy.yaml")
   elif (choice == 'Formal Word Replacement'):
-    "placeholder"
+    markov.generate_email("greeting","body","closing","gen.txt", True)
   elif (choice == 'Medium Formal Markov Chain'):
     markov.generate_email("greeting","body","closing","gen.txt")
   elif (choice == 'Medium Formal Naive'):
-    naive_tags.replace_and_output("data/naive/outing.outline",
-        "gen.txt", "data/naive/outing.yaml")
+    naive_tags.replace_and_output("data/naive/wordsmiths.outline",
+        "gen.txt", "data/naive/wordsmiths.yaml")
   elif (choice == 'Medium Formal Word Replacement'):
-    "placeholder"
+    markov.generate_email("greeting","body","closing", "gen.txt", True)
   elif (choice == 'Informal Markov Chain'):
     markov.generate_email("greeting","body","closing","gen.txt")
   elif (choice == 'Informal Naive'):
-    naive_tags.replace_and_output("data/naive/wordsmiths.outline",
-        "gen.txt", "data/naive/wordsmiths.yaml")
+    naive_tags.replace_and_output("data/naive/outings.outline",
+        "gen.txt", "data/naive/outings.yaml")
   else:
-    "placeholder"
+    markov.generate_email("greeting","body","closing","gen.txt", True)
   
 class CascadingBoxes(urwid.WidgetPlaceholder):
     max_box_levels = 4
