@@ -13,8 +13,8 @@ The output from this program will be generated to gen.txt in the current working
 directory
 
 ##Files Used
-If you would like to see files used, all scripts used in the GUI are contained
+1. If you would like to see files used, all scripts used in the GUI are contained
 within the `scripts` folder and all the data is in the `data` folder.
-All of the original emails are contained within the `mbox` folder
-All of the cleaning and processing scripts are contained with the
+1. All of the original emails are contained within the `mbox` folder
+1. All of the cleaning and processing scripts are contained with the
 `cleaning_processing_scripts` folder
