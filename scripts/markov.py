@@ -45,7 +45,7 @@ def generate_sentence(d, eos):
     return ' '.join(li)
 
 def generate_email(greeting_file, body_file, closing_file, output_file,
-    replace=False):
+    replace=False, par_min=2, par_max=4, sen_min=1, sen_max=4):
 
     with open(greeting_file, "rt", encoding="utf-8") as f:
         greeting_text = f.read()
@@ -76,20 +76,17 @@ def generate_email(greeting_file, body_file, closing_file, output_file,
     closing = str(random.choice(closing_list))
 
     message = ""
-    body_len = random.randint(2, 4)
-    paragraph_len = random.randint(1, 4)
+    body_len = random.randint(par_min, par_max)
+    #paragraph_len = random.randint(sen_min, sen_max)
 
     message += "\n" + greeting + "\n\n"
 
     highlighting = False
 
     for i in range(body_len):
-        if(paragraph_len >= 0):
-            paragraph_len -= 1
-        else:
-            message += "\n\n"
-            paragraph_len = random.randint(2, 4)
-
+      #make the amount of sentences per paragraph different
+      paragraph_len = random.randint(sen_min,sen_max)
+      for l in range(paragraph_len):
         sentence = generate_sentence(body, body_EOS) + " "
         if(replace):
           for word in sentence.split():
@@ -117,6 +114,8 @@ def generate_email(greeting_file, body_file, closing_file, output_file,
                   message += word + " "
         else:
           message += sentence
+      message += "\n\n"
+
                 
     message += "\n\n\n" + closing + "\n"
 

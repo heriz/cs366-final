@@ -2,4 +2,4 @@
 processedTexts.zip
 cleaned/*
 gen.txt
-*.pyc
+scripts/__pycache__/*.pyc
