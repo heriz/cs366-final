@@ -42,7 +42,5 @@ def main(arg):
   #clean up the last temporary file
   os.remove("temp.txt")
 
-
-
 if __name__ == "__main__":
   main(sys.argv)
