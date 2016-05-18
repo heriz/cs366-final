@@ -6,6 +6,19 @@ import markov
 import naive_tags
 import jumble
 
+
+###############################################################################
+#                                                                             #
+#   File: run.py                                                              #
+#   This script will start a GUI which runs one of the selected random text   #
+#   generation algorithms.                                                    #
+#                                                                             #
+#   Lots of GUI setup comes from the tutorial                                 #
+#   on the urwid website.                                                     #
+#   Henry Rizzi && Angela Assante                                             #
+#                                                                             #
+###############################################################################
+
 def menu_button(caption, callback):
     button = urwid.Button(caption)
     urwid.connect_signal(button, 'click', callback)
@@ -22,8 +35,11 @@ def menu(title, choices):
     body.extend(choices)
     return urwid.ListBox(urwid.SimpleFocusListWalker(body))
 
+#use this to deal with choices from the user in the menu
 def item_chosen(button):
+  #first respond to the choice
     response = urwid.Text([u'You chose ', button.label, u': check gen.txt for output!\n'])
+    #then run the selected thing using the button choice
     handle_choices(button.label)
     done = menu_button(u'OK', exit_program)
     top.open_box(urwid.Filler(urwid.Pile([response, done])))
@@ -50,6 +66,8 @@ menu_top = menu(u'Style of Message', [
     ]),
 ])
 
+#basically just a gigantic switch statement to run whatever script is necessary
+#  for the desired output
 def handle_choices(choice):
   if (choice == 'Cappy Markov Chain'):
     markov.generate_email("data/cleaned/greetings-cappy.txt","data/cleaned/cappy.txt",
