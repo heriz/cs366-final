@@ -1,15 +1,7 @@
-# usage:
-# python3 markov.py [greeting text file] [body text file] [closing text file]
-#
-# example:
-# python3 markov.py greetings-cappy.txt cappy.mbox.txt closings-cappy.txt
-
 import sys
 import random
 import jumble as j
 from random import choice
-
-#sys.argv = [sys.argv[0], 'greetings-cappy.txt', 'cappy.mbox.txt', 'closings-cappy.txt']
 
 def build_dict(words):
     """
@@ -52,13 +44,7 @@ def generate_sentence(d, eos):
  
     return ' '.join(li)
 
-#def generate_email(greeting_file, body_file, closing_file, output_file):
-    
-
-def main():
-    greeting_file = sys.argv[1]
-    body_file = sys.argv[2]
-    closing_file = sys.argv[3]
+def generate_email(greeting_file, body_file, closing_file, output_file):
 
     with open(greeting_file, "rt", encoding="utf-8") as f:
         greeting_text = f.read()
@@ -66,6 +52,8 @@ def main():
         body_text = g.read()
     with open(closing_file, "rt", encoding="utf-8") as h:
         closing_text = h.read()
+
+    output = open(output_file, "w")
 
     # remove residual empty strings
     greeting_list = list(filter(None, greeting_text.split("\n")))
@@ -82,9 +70,7 @@ def main():
     body = build_dict(body_words)
 
     body_EOS = ['.', '?', '!']
-    #greeting_EOS = [',', '.', '!', ':']
-
-    #greeting = generate_sentence(greeting, greeting_EOS)
+    
     greeting = str(random.choice(greeting_list))
     closing = str(random.choice(closing_list))
 
@@ -130,7 +116,10 @@ def main():
                 
     message += "\n\n\n" + closing + "\n"
 
-    print(message)
+    output.write(message)
+
+def main():
+    generate_email(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
 if __name__ == "__main__":
     main()
