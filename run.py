@@ -52,21 +52,21 @@ menu_top = menu(u'Style of Message', [
 
 def handle_choices(choice):
   if (choice == 'Formal Markov Chain'):
-    "placeholder"
+    markov.generate_email("greeting","body","closing","gen.txt")
   elif (choice == 'Formal Naive'):
     naive_tags.replace_and_output("data/naive/cappy.outline", 
         "gen.txt","data/naive/cappy.yaml")
   elif (choice == 'Formal Word Replacement'):
     "placeholder"
   elif (choice == 'Medium Formal Markov Chain'):
-    "placeholder"
+    markov.generate_email("greeting","body","closing","gen.txt")
   elif (choice == 'Medium Formal Naive'):
     naive_tags.replace_and_output("data/naive/outing.outline",
         "gen.txt", "data/naive/outing.yaml")
   elif (choice == 'Medium Formal Word Replacement'):
     "placeholder"
   elif (choice == 'Informal Markov Chain'):
-    "placeholder"
+    markov.generate_email("greeting","body","closing","gen.txt")
   elif (choice == 'Informal Naive'):
     naive_tags.replace_and_output("data/naive/wordsmiths.outline",
         "gen.txt", "data/naive/wordsmiths.yaml")

@@ -1,5 +1,6 @@
 import random
 from nltk.corpus import wordnet as wn
+import markov
 
 replacement_prob = 30 # percent
 
@@ -11,7 +12,6 @@ def replace_noun(tagged_word):
     substitute = random.choice(parent.hyponyms())
     substitute_word = substitute.name()
     print(wn.synset(substitute_word).name().split('.')[0])
-
 
 if(random.randint(1,100) <= replacement_prob):
     replace_noun("chicken_NN")

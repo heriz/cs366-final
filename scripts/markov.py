@@ -57,6 +57,37 @@ def generate_sentence(d, eos):
  
     return ' '.join(li)
 
+def generate_email(greeting_file, body_file, closing_file, output_file):
+    with open(greeting_file, "rt", encoding="utf-8") as f:
+        greeting_text = f.read()
+    with open(body_file, "rt", encoding="utf-8") as g:
+        body_text = g.read()
+    with open(closing_file, "rt", encoding="utf-8") as h:
+        closing_text = h.read()
+
+    # remove residual empty strings
+    closing_list = list(filter(None, closing_text.split("\n")))
+
+    # * is designated newline character in source text file
+    for i in range(len(closing_list)):
+        closing_list[i] = closing_list[i].replace('*','\n')
+    
+    greeting_words = greeting_text.split()
+    greeting = build_dict(greeting_words)
+
+    body_words = body_text.split()
+    body = build_dict(body_words)
+
+    greeting = generate_sentence(greeting, greeting_EOS)
+    closing = str(random.choice(closing_list))
+    
+    output = open(output_file, "w", encoding="utf-8")
+    output.write("\n" + greeting + "\n")
+    for i in range(body_len):
+        output.write(generate_sentence(body, body_EOS))
+    output.write("\n" + closing + "\n")
+
+
 def main():
     greeting_file = sys.argv[1]
     body_file = sys.argv[2]
