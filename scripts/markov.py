@@ -1,15 +1,7 @@
-# usage:
-# python3 markov.py [greeting text file] [body text file] [closing text file]
-#
-# example:
-# python3 markov.py greetings-cappy.txt cappy.mbox.txt closings-cappy.txt
-
 import sys
 import random
 import jumble as j
 from random import choice
-
-#sys.argv = [sys.argv[0], 'greetings-cappy.txt', 'cappy.mbox.txt', 'closings-cappy.txt']
 
 def build_dict(words):
     """
@@ -127,7 +119,7 @@ def generate_email(greeting_file, body_file, closing_file, output_file):
     output.write(message)
 
 def main():
-    generate_email("greetings-cappy.txt", "cappy.txt", "closings-cappy.txt", "cappy-output.txt")
+    generate_email(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
 if __name__ == "__main__":
     main()
