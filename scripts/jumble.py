@@ -3,7 +3,6 @@ import yaml
 from collections import defaultdict
 from yaml.representer import Representer
 from nltk.corpus import wordnet as wn
-import os
 
 with open("data/data.yaml", 'r') as f:
     try:
