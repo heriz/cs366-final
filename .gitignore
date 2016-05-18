@@ -2,3 +2,4 @@
 processedTexts.zip
 cleaned/*
 gen.txt
+*.pyc
