@@ -53,13 +53,13 @@ menu_top = menu(u'Style of Message', [
 def handle_choices(choice):
   if (choice == 'Formal Markov Chain'):
     markov.generate_email("data/cleaned/greetings-cappy.txt","data/cleaned/cappy.txt",
-        "data/cleaned/closings-cappy.txt","gen.txt",par_min=4,par_max=8,sen_min=6,sen_max=10)
+        "data/cleaned/closings-cappy.txt","gen.txt",par_min=4,par_max=8,sen_min=4,sen_max=8)
   elif (choice == 'Formal Naive'):
     naive_tags.replace_and_output("data/naive/cappy.outline", 
         "gen.txt","data/naive/cappy.yaml")
   elif (choice == 'Formal Word Replacement'):
     markov.generate_email("data/cleaned/greetings-cappy.txt","data/cleaned/cappy.txt",
-        "data/cleaned/closings-cappy.txt","gen.txt", replace=True,par_min=4,par_max=8,sen_min=6,sen_max=10)
+        "data/cleaned/closings-cappy.txt","gen.txt", replace=True,par_min=4,par_max=8,sen_min=4,sen_max=8)
   elif (choice == 'Medium Formal Markov Chain'):
     markov.generate_email("data/cleaned/greetings-wordsmiths.txt","data/cleaned/wordsmiths.txt",
         "data/cleaned/closings-wordsmiths.txt","gen.txt",par_min=2,par_max=5,sen_min=2,sen_max=6)
@@ -73,8 +73,8 @@ def handle_choices(choice):
     markov.generate_email("data/cleaned/greetings-outing.txt","data/cleaned/outing.txt",
         "data/cleaned/closings-outing.txt","gen.txt",par_min=2,par_max=4,sen_min=1,sen_max=4)
   elif (choice == 'Informal Naive'):
-    naive_tags.replace_and_output("data/naive/outings.outline",
-        "gen.txt", "data/naive/outings.yaml")
+    naive_tags.replace_and_output("data/naive/outing.outline",
+        "gen.txt", "data/naive/outing.yaml")
   else:
     markov.generate_email("data/cleaned/greetings-outing.txt","data/cleaned/outing.txt",
         "data/cleaned/closings-outing.txt","gen.txt",replace=True,par_min=2,par_max=4,sen_min=1,sen_max=4)
