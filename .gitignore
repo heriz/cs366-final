@@ -1,3 +1,4 @@
 *.mbox
 processedTexts.zip
 cleaned/*
+gen.txt
