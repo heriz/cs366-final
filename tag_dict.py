@@ -13,30 +13,33 @@ from collections import defaultdict
 """
 
 def main(arg):
+  #set up the input and output file here
   input_file = arg[1]
   yaml_file = arg[2]
   #do this so that way there are empty lists for empty entries
   all_tags = defaultdict(list)
   #pretty print statement to make the script more friendly
   print("Adding terms and tags for " + input_file + " to " + yaml_file + "!")
+  #this will be the output from arc with tags and words
   ark_output = open(input_file, "r")
   for lines in ark_output:
-    #print(lines)
+    #strip out superfluous data
     lines = lines.strip()
+    #get each set of pairs
     word_pairs = lines.split(" ")
-    #default dict lets me like, make things nicer
+    #avoid superfluous code by using defaultdic
     for pairs in word_pairs:
-      #print(pairs)
-      #some of the tag pairs are messed up, ignore that messed up-ness
+      #some of the tag pairs aren't actually pairs, so just get the first two
+      #   elements
       word, tag = pairs.split("_")[:2]
       all_tags[tag].append(word)
-     
+  #This is used to add to a yaml file if that's the desired behavior 
   if os.path.exists(yaml_file):
     #do some stuff to get the current values of the yaml written to hard disk
     temp = defaultdict(list)
     read_file = open(yaml_file, "r")
     tags = yaml.load(read_file)
-    #hahahaha... this is ridiculous
+    #kind of ridiculous, but merge entries from both files
     for entries in tags:
       #do a merge of the two lists
       temp[entries] = tags[entries] + all_tags[entries]
@@ -51,6 +54,7 @@ def main(arg):
     yaml.dump(temp, output)
     output.close()
   else:
+    #otherwise, just write everything to the new yaml file
     output = open(yaml_file, "w")
     for entries in all_tags:
       all_tags[entries] = list(set(all_tags[entries]))
