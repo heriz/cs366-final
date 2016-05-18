@@ -44,7 +44,8 @@ def generate_sentence(d, eos):
  
     return ' '.join(li)
 
-def generate_email(greeting_file, body_file, closing_file, output_file):
+def generate_email(greeting_file, body_file, closing_file, output_file,
+    replace=False):
 
     with open(greeting_file, "rt", encoding="utf-8") as f:
         greeting_text = f.read()
@@ -90,29 +91,32 @@ def generate_email(greeting_file, body_file, closing_file, output_file):
             paragraph_len = random.randint(2, 4)
 
         sentence = generate_sentence(body, body_EOS) + " "
-        
-        for word in sentence.split():
-            if(j.is_replaceable_noun(word) and
-               random.randint(1,100) <= j.noun_replacement_prob):
-                if(highlighting):
-                    message += "*" + j.switch_noun(word) + "*" + " "
-                else:
-                    message += j.switch_noun(word) + " "
-            elif(word in j.adverb_list and
-                    random.randint(1,100) <= j.adverb_replacement_prob):
-                    if(highlighting):
-                        message += "*" + j.switch_by_pos(word, j.adverb_list) + "*" + " "
-                    else:
-                        message += j.switch_by_pos(word, j.adverb_list) + " "
+        if(replace):
+          for word in sentence.split():
+            if(replace):
+              if(j.is_replaceable_noun(word) and
+                 random.randint(1,100) <= j.noun_replacement_prob):
+                  if(highlighting):
+                      message += "*" + j.switch_noun(word) + "*" + " "
+                  else:
+                      message += j.switch_noun(word) + " "
+              elif(word in j.adverb_list and
+                      random.randint(1,100) <= j.adverb_replacement_prob):
+                      if(highlighting):
+                          message += "*" + j.switch_by_pos(word, j.adverb_list) + "*" + " "
+                      else:
+                          message += j.switch_by_pos(word, j.adverb_list) + " "
 
-            elif(word in j.adjective_list and
-                    random.randint(1,100) <= j.adjective_replacement_prob):
-                    if(highlighting):
-                        message += "*" + j.switch_by_pos(word, j.adjective_list) + "*" + " "
-                    else:
-                        message += j.switch_by_pos(word, j.adjective_list) + " "
-            else:
-                message += " " + word + " "
+              elif(word in j.adjective_list and
+                      random.randint(1,100) <= j.adjective_replacement_prob):
+                      if(highlighting):
+                          message += "*" + j.switch_by_pos(word, j.adjective_list) + "*" + " "
+                      else:
+                          message += j.switch_by_pos(word, j.adjective_list) + " "
+              else:
+                  message += word + " "
+        else:
+          message += sentence
                 
     message += "\n\n\n" + closing + "\n"
 

@@ -3,8 +3,9 @@ import yaml
 from collections import defaultdict
 from yaml.representer import Representer
 from nltk.corpus import wordnet as wn
+import os
 
-with open("data.yaml", 'r') as f:
+with open("data/data.yaml", 'r') as f:
     try:
         tag_data = yaml.load(f.read())
     except yaml.YAMLError as exc:
