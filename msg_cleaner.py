@@ -14,6 +14,7 @@ import unicodedata
 from subprocess import call
 
 def get_charsets(msg):
+  #add stuff to the character set if not None
   charsets = set({})
   for c in msg.get_charsets():
       if c is not None:
@@ -21,14 +22,27 @@ def get_charsets(msg):
   return charsets
 
 def get_body(msg):
+  #make sure that all parts of the message are evaluated
   while msg.is_multipart():
+    ##append the payload of the message to the message
       msg=msg.get_payload()[0]
+  #decode the message to make sure that it's readable
   t=msg.get_payload(decode=True)
+  #get the list of character sets
   for charset in get_charsets(msg):
+      #decode the message with character sets from message
       t=t.decode(charset)
+  #return decoded message
   return t
 
 def remove_emojis(msg):
+  """
+    This function will get rid of things in the unicode set listed below, which
+    is the most common set of unicode emojis. A few emojis won't be taken out of
+    the output, however, as they are in different range zones. this one is
+    effective for our data though.
+    @param msg string a string representation of the message to be cleaned.
+  """
   htmlReg = re.findall(u'([\U0001f300-\U0001f64F])',msg)
   if htmlReg:
     for terms in htmlReg:
@@ -114,31 +128,45 @@ def main(argv):
   #deal with multiple argument amounts
   input_file = argv[1]
   output_file = argv[2]
+  #since I didn't want to have a certain amount of arguments required,
+  # this set of statements changes how things are interpreted based on
+  # the amount of arguments that are fed into the function
   if len(argv) == 4:
+    #in this situation, you run the tagger, but don't only have POS tags
     tagger_flag = argv[3]
     pos_flag = "f"
   elif len(argv) == 5:
+    #this situation is only pos tags, but tagger must also be set bc of length
     tagger_flag = argv[3]
     pos_flag = argv[4]
   else:
+    #this will set both flags to "f" for false if not set
     tagger_flag = "f"
     pos_flag = "f"
 
+  #read in from the input file
   current_mailbox = mailbox.mbox(input_file)
+  #create an intermediary file if necessary, otherwise write directly
   if tagger_flag == "t":
     write_file = open("interText.txt", "w")
   else:
     write_file = open(output_file, 'w')
+  #use this to store the emails
   decoded_emails = list()
+  #get all of the emails in the current_mailbox
   for this_email in current_mailbox:
+    #get body and then run all cleaning routines
     body = get_body(this_email)
     body = remove_emojis(body)
     body = cleanup_email(body, strip_url=True)
     decoded_emails.append(body)
+  #make sure that the emails don't have weird white space characters, and then
+  #  append them onto the file that you're writing to
   for elements in decoded_emails:
     elements = elements.strip()
     write_file.write(elements + "\n")
   write_file.close()
+  #now do the tagger stuff if you need to
   if tagger_flag == "t":
     #open a temporary file to write the tagged tweets to
     temp = open("temp.txt","w")
