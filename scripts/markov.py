@@ -90,5 +90,5 @@ def main():
         print(generate_sentence(body, body_EOS))
     print("\n" + closing + "\n")
 
-
-main()
+if __name__ == "__main__":
+  main()

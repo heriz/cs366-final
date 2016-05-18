@@ -1,4 +1,10 @@
 import urwid
+import sys, os
+wd = os.getcwd()
+sys.path.insert(0, wd+"/scripts")
+import markov
+import naive_tags
+import jumble
 
 def menu_button(caption, callback):
     button = urwid.Button(caption)
@@ -17,8 +23,8 @@ def menu(title, choices):
     return urwid.ListBox(urwid.SimpleFocusListWalker(body))
 
 def item_chosen(button):
-    response = urwid.Text([u'You chose ', button.label, u': generating text now\n'])
-
+    response = urwid.Text([u'You chose ', button.label, u': check gen.txt for output!\n'])
+    handle_choices(button.label)
     done = menu_button(u'OK', exit_program)
     top.open_box(urwid.Filler(urwid.Pile([response, done])))
 
@@ -32,9 +38,9 @@ menu_top = menu(u'Style of Message', [
         menu_button(u'Formal Word Replacement', item_chosen),
     ]),
     sub_menu(u'Medium Formal', [
-        menu_button(u'Almost Formal Markov Chain', item_chosen),
-        menu_button(u'Almost Formal Naive', item_chosen),
-        menu_button(u'Almost Formal Word Replacement', item_chosen),
+        menu_button(u'Medium Formal Markov Chain', item_chosen),
+        menu_button(u'Medium Formal Naive', item_chosen),
+        menu_button(u'Medium Formal Word Replacement', item_chosen),
     ]),
 
     sub_menu(u'Informal', [
@@ -44,11 +50,34 @@ menu_top = menu(u'Style of Message', [
     ]),
 ])
 
+def handle_choices(choice):
+  if (choice == 'Formal Markov Chain'):
+    "placeholder"
+  elif (choice == 'Formal Naive'):
+    naive_tags.replace_and_output("data/naive/cappy.outline", 
+        "gen.txt","data/naive/cappy.yaml")
+  elif (choice == 'Formal Word Replacement'):
+    "placeholder"
+  elif (choice == 'Medium Formal Markov Chain'):
+    "placeholder"
+  elif (choice == 'Medium Formal Naive'):
+    naive_tags.replace_and_output("data/naive/outing.outline",
+        "gen.txt", "data/naive/outing.yaml")
+  elif (choice == 'Medium Formal Word Replacement'):
+    "placeholder"
+  elif (choice == 'Informal Markov Chain'):
+    "placeholder"
+  elif (choice == 'Informal Naive'):
+    naive_tags.replace_and_output("data/naive/wordsmiths.outline",
+        "gen.txt", "data/naive/wordsmiths.yaml")
+  else:
+    "placeholder"
+  
 class CascadingBoxes(urwid.WidgetPlaceholder):
     max_box_levels = 4
 
     def __init__(self, box):
-        super(CascadingBoxes, self).__init__(urwid.SolidFill(u'`'))
+        super(CascadingBoxes, self).__init__(urwid.SolidFill(u'/'))
         self.box_level = 0
         self.open_box(box)
 
@@ -71,6 +100,6 @@ class CascadingBoxes(urwid.WidgetPlaceholder):
         else:
             return super(CascadingBoxes, self).keypress(size, key)
 
-top = CascadingBoxes(menu_top)
-urwid.MainLoop(top, palette=[('reversed', 'standout', '')]).run()
-
+if __name__ == "__main__":
+  top = CascadingBoxes(menu_top)
+  urwid.MainLoop(top, palette=[('reversed', 'standout', '')]).run()

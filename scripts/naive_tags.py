@@ -13,12 +13,10 @@ def replace_word_random(tag, dictionary):
   else:
     return ""
 
-def main(arg):
-  input_file = arg[1]
-  output_file = arg[2]
-  yaml_file = open("data.yaml", "r")
-  dict_file = yaml.load(yaml_file)
-  yaml_file.close()
+def replace_and_output(input_file, output_file, yaml_file):
+  yaml_load_file = open(yaml_file, "r")
+  dict_file = yaml.load(yaml_load_file)
+  yaml_load_file.close()
   lines = open(input_file, "r")
   line_list = list()
   for line in lines:
@@ -44,6 +42,13 @@ def main(arg):
   for line in line_list:
     write_file.write(line+"\n")
   write_file.close()
+
+
+def main(arg):
+  input_file = arg[1]
+  output_file = arg[2]
+  yaml_file = arg[3]
+  replace_and_output(input_file, output_file, yaml_file) 
 
 
 if __name__ == "__main__":

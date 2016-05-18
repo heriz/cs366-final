@@ -12,14 +12,9 @@ from collections import defaultdict
 
 """
 
-def main(arg):
-  #set up the input and output file here
-  input_file = arg[1]
-  yaml_file = arg[2]
+def create_tag_dict(input_file, yaml_file):
   #do this so that way there are empty lists for empty entries
   all_tags = defaultdict(list)
-  #pretty print statement to make the script more friendly
-  print("Adding terms and tags for " + input_file + " to " + yaml_file + "!")
   #this will be the output from arc with tags and words
   ark_output = open(input_file, "r")
   for lines in ark_output:
@@ -60,6 +55,15 @@ def main(arg):
       all_tags[entries] = list(set(all_tags[entries]))
     yaml.dump(all_tags, output)
     output.close()
+
+def main(arg):
+  #set up the input and output file here
+  input_file = arg[1]
+  yaml_file = arg[2]
+  #make the script friendlier if being run from the commandline
+  #print("Adding terms and tags for " + input_file + " to " + yaml_file)
+  create_tag_dict(input_file, yaml_file)
+  
 
 
 if __name__ == "__main__":
