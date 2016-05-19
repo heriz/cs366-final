@@ -18,7 +18,7 @@ adverb_list = tag_data["RB"]
 
 #the probability of replacement for each of them
 noun_replacement_prob = 30 # percent
-adjective_replacement_prob = 40 # percent
+adjective_replacement_prob = 20 # percent
 adverb_replacement_prob = 20 # percent
 
 #use this to make sure that the word actually exists,
